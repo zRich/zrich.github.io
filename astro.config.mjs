@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://zrich.github.io',
-	integrations: [mdx(), sitemap()],
+  site: 'https://zrich.github.io',
+  base: '/',
+  integrations: [mdx(), sitemap()],
 });
