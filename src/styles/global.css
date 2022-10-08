@@ -6,8 +6,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 body {
-font-family: arial, 'Helvetic', 'Apple Color Emoji', 'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol';
--webkit-font-smoothing: antialiased;
+  font-family: arial, "Helvetic", "Apple Color Emoji", "Segoe UI",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-wrap: break-word;
 }

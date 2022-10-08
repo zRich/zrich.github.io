@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Content from "../components/Content.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 ---
 
@@ -12,8 +13,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
   </head>
   <body>
     <Header title={SITE_TITLE} />
-    <main>
-      <h1 class="font-Inter text-4xl">Welcome to see what I thought and What I have done!</h1>
+    <main class="pt-[56px]">
+      <Content><section>
+      <h1 class="font-Inter text-4xl">Welcome to my site.</h1>
+      </section></Content>
     </main>
     <Footer />
   </body>

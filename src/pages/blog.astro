@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Content from '../components/Content.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 
 // Use Astro.glob() to fetch all posts, and then sort them by date.
@@ -11,7 +12,7 @@ const posts = (await Astro.glob('./blog/*.{md,mdx}')).sort(
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
@@ -34,7 +35,8 @@ const posts = (await Astro.glob('./blog/*.{md,mdx}')).sort(
 	</head>
 	<body>
 		<Header />
-		<main>
+		<main class="pt-[56px]">
+        <Content>
 			<section>
 				<ul>
 					{posts.map((post) => (
@@ -51,6 +53,7 @@ const posts = (await Astro.glob('./blog/*.{md,mdx}')).sort(
 					))}
 				</ul>
 			</section>
+        </Content>
 		</main>
 		<Footer />
 	</body>
