@@ -11,12 +11,19 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body>
+  <body class="bg-orange-50 text-stone-800">
     <Header title={SITE_TITLE} />
     <main class="pt-[56px]">
-      <Content><section>
-      <h1 class="font-Inter text-4xl">Welcome to my site.</h1>
-      </section></Content>
+      <Content
+        ><section>
+          <h1 class="font-Inter font-bold text-stone-700 text-4xl">Welcome to my site.</h1>
+          <div class="mb-6 mt-4">
+            <p class="text-stone-800">
+              I dont write too much, but every word I wrote counts.
+            </p>
+          </div>
+        </section>
+      </Content>
     </main>
     <Footer />
   </body>

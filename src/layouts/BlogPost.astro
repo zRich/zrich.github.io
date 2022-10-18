@@ -4,54 +4,59 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
 export interface Props {
-	content: {
-		title: string;
-		description: string;
-		pubDate?: string;
-		updatedDate?: string;
-		heroImage?: string;
-	};
+  content: {
+    title: string;
+    description: string;
+    pubDate?: string;
+    updatedDate?: string;
+    heroImage?: string;
+  };
 }
 
 const {
-	content: { title, description, pubDate, updatedDate, heroImage },
+  content: { title, description, pubDate, updatedDate, heroImage },
 } = Astro.props;
 ---
 
+<!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			.title {
-				font-size: 2em;
-				margin: 0.25em 0 0;
-			}
-			hr {
-  				border-top: 1px solid #DDD;
-				margin: 1rem 0;
-			}
-		</style>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <BaseHead title={title} description={description} />
+    <link rel="stylesheet" href="../styles/tailwind.min.css" />
+  </head>
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				{heroImage && (
-					<img
-						width={720}
-						height={360}
-						src={heroImage}
-						alt=""
-					/>
-				)}
-				<h1 class="title">{title}</h1>
-				{pubDate && <time>{pubDate}</time>}
-				{updatedDate && <div>Last updated on <time>{updatedDate}</time></div>}
-				<hr/>
-				<slot />
-			</article>
-		</main>
-		<Footer />
-	</body>
+  <body class="flex justify-center items-center bg-orange-50 text-gray-100">
+    <main>
+      <Header />
+      <div class="rounded-lg">
+        <article class="text-stone-800">
+          {heroImage && <img width={720} height={360} src={heroImage} alt="" />}
+          <div class="flex flex-col border border-slate-400 rounded-xl justify-center items-center">
+            <div class="text-blue-900 font-bold">
+              <h1 class="text-blue-900 font-bold">
+                {title}
+              </h1>
+            </div>
+            <div>
+              {pubDate && <time>{pubDate}</time>}
+              {
+                updatedDate && (
+                  <div>
+                    Last updated on <time>{updatedDate}</time>
+                  </div>
+                )
+              }
+            </div>
+            <hr />
+            <div class="items-start">
+              <slot />
+            </div>
+          </div>
+        </article>
+      </div>
+      <Footer />
+    </main>
+  </body>
 </html>
