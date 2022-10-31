@@ -27,13 +27,13 @@ const {
     <link rel="stylesheet" href="../styles/tailwind.min.css" />
   </head>
 
-  <body class="flex justify-center items-center bg-orange-50 text-gray-100">
+  <body class="flex justify-center items-center">
     <main>
       <Header />
-      <div class="rounded-lg">
+      <div class="flex m-4">
         <article class="text-stone-800">
           {heroImage && <img width={720} height={360} src={heroImage} alt="" />}
-          <div class="flex flex-col border border-slate-400 rounded-xl justify-center items-center">
+          <div class="flex flex-col justify-center items-center">
             <div class="text-blue-900 font-bold">
               <h1 class="text-blue-900 font-bold">
                 {title}
