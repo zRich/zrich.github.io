@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from "react-icons/ai";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-import NavLogo from "/public/z.png";
+import SiteLogo from "/public/zhao.jpg";
 import WechatIcon from "/public/wechat-icon.png";
 
 const Navbar = () => {
@@ -30,11 +30,11 @@ const Navbar = () => {
       <div className="relative my-4 flex justify-between items-center px-8">
         <Link href="/">
           <Image
-            src={NavLogo}
+            src={SiteLogo}
             alt="/"
             width="36"
             height="36"
-            className="cursor-pointer"
+            className="cursor-pointer rounded-full"
           />
         </Link>
         <div>
@@ -72,7 +72,7 @@ const Navbar = () => {
           <div>
             <div className="flex w-full items-center justify-between">
               <Link href="/">
-                <Image src={NavLogo} width="87" height="35" alt="/" />
+                <Image src={SiteLogo} width="87" height="35" alt="/" />
               </Link>
               <div
                 onClick={handleNav}
