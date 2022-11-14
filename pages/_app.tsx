@@ -11,7 +11,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>ZHAO Zhenhua&#39;s blog</title>
-        <link rel="icon" type="image/x-icon" href="/favicon.png" />
+        <link rel="icon" type="image/png" href="/z-letter.png" />
       </Head>
       <div className="px-6">
       <Navbar />
