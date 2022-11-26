@@ -14,7 +14,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" type="image/png" href="/z-letter.png" />
       </Head>
       <div className="px-6">
-      <Navbar />
+      
+        <Navbar />
+    
         <Component {...pageProps} />
       </div>
     </>

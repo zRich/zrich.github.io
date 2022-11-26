@@ -2,7 +2,7 @@
 title: "大部分人不关心自己的数据"
 description: "人们并不关心自己的数据"
 date: "November 1 2022"
-cover: "/placeholder-hero.jpg"
+cover: "/IMG_1446.jpg"
 ---
 
 # 大部分不关心自己的数据

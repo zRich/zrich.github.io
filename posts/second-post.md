@@ -2,7 +2,7 @@
 title: "重新定义数据"
 description: "重新定义数据"
 date: "Oct 08 2022"
-cover: "/placeholder-hero.jpg"
+cover: "/IMG_1443.jpg"
 ---
 
 # 数据是什么？

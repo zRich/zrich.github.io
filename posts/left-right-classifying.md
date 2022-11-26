@@ -2,7 +2,7 @@
 title: "左右数据分类法"
 description: "左右数据分类法"
 date: "Oct 24 2022"
-cover: "/placeholder-hero.jpg"
+cover: "/IMG_1442.jpg"
 ---
 
 # 为什么要对数据分类？ 

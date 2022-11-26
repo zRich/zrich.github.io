@@ -2,7 +2,7 @@
 title: "提高社区工作透明度"
 description: "透明的重要性"
 date: "Oct 02 2022"
-cover: "/placeholder-hero.jpg"
+cover: "/IMG_1444.jpg"
 ---
 
 # 透明对开源社区来说是极其重要的。

@@ -1,41 +1,19 @@
 import Link from 'next/link'
-import { compareDesc, format, parseISO } from 'date-fns'
-import { allPosts, Post } from 'contentlayer/generated'
-
-export async function getStaticProps() {
-  const posts: Post[] = allPosts.sort((a, b) => {
-    return compareDesc(new Date(a.date), new Date(b.date))
-  })
-  return { props: { posts } }
-}
-
-function PostCard(post: Post) {
-  return (
-    <div className="mb-8">
-      <h2 className="text-xl">
-        <Link
-          href={post.url}
-          className="text-blue-700 hover:text-blue-900"
-          legacyBehavior>
-          {post.title}
-        </Link>
-      </h2>
-      <time dateTime={post.date} className="block text-xs text-gray-600 mb-2">
-        {format(parseISO(post.date), 'LLLL d, yyyy')}
-      </time>
-      <div className="text-sm" dangerouslySetInnerHTML={{ __html: post.body.html }} />
-    </div>
-  );
-}
-
-export default function Home({ posts }: { posts: Post[] }) {
+import React from 'react'
+export default function Home() {
   return (
     <div className="max-w-xl mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8 text-center">Hi, welcome!</h1>
+      <p className='text-6xl'>
+        数据的概念和内含正在进行根本性改变，它正逐渐变化成资产本身。这是一个伟大的变革，让我们一起做点、改变这个世界吧！
+      </p>
 
-      {posts.map((post, idx) => (
-        <PostCard key={idx} {...post} />
-      ))}
+        <Link
+        className='text-4xl text-blue-600'
+        href={"/posts"}
+        >
+        更多文章
+      </Link>
+
     </div>
   )
 }
