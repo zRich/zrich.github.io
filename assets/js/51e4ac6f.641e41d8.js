@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_demo=self.webpackChunkdocusaurus_demo||[]).push([[169],{7736:e=>{e.exports=JSON.parse('{"label":"OpenSource","permalink":"/blog/tags/open-source","allTagsPath":"/blog/tags","count":1}')}}]);
