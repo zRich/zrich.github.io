@@ -1,16 +1,31 @@
 ---
-title: 'First post'
-description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 08 2022'
-heroImage: '/blog-placeholder-3.jpg'
+title: "提高社区工作透明度"
+slug: osc-001
+description: "透明的重要性"
+pubDate: "Oct 02 2022"
+authors: [richzhao]
+heroImage: "/images/IMG_1444.JPG"
+tags: [OpenSource, Community, Blog]
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+![Cover Page](/images/IMG_1444.JPG)
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+## 透明对开源社区来说是极其重要的
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+最近在负责一个Linux基金会的翻译SIG。SIG成员都是来自外部并且彼此之间工作交集很少。也就是说，虽然大家在同一个项目，但是并不知道其他人工作质量好坏。在我Review时发现SIG成员的工作质量参差不齐，有的成员翻译的非常好，但也有一个成员的工作质量没那么好。如果告诉他情况，我担心会影响他的积极性，毕竟质量差好过没有。如果不告诉他和其他志愿者，肯定会影响项目质量以及其他成员的积极性。我必须想办法解决这个问题。
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+## 转到github
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+将协助工具从腾讯文档转移到github。虽然在腾讯文档上也能记录了编写和批注的记录，但是查看并不容易，而且有时候还需要切换版本。因此，我决定切换到github。因为在github上，每个PR的提交都有明确的ID，谁提交的PR一目了然。
+
+## 志愿者名单
+
+我的第二个做法是在GitHub的页面上增加联系人名单，并且记录微信ID，微信昵称和github ID。这样在微信群内、github上、微信其他工具比如投票、表格等上可以非常方便的把志愿者和ID对应起来，不至于搞混。
+
+## 任务认领制
+
+认领制并不是新的做法，在项目开始就是采用认领制的。但是我认领列表放在项目的首页，以提高透明度。相互协助的时候可以方便的找到对应的人交流沟通，使工作更加有效率。
+
+## 持续改进流程
+
+把项目执行过程中会遇到各种各样的问题，如何解决这些问题最好的方式就是与大家讨论形成共识，并且将它形成制度在SIG仓库中发布出来。
