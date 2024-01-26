@@ -1,6 +1,6 @@
 ---
 title: "左右数据分类法"
-description: "左右数据分类法"
+description: "介绍我的左右数据分类法"
 slug: data-classification
 pubDate: "Oct 24 2022"
 authors: [richzhao]

@@ -1,6 +1,6 @@
 ---
 title: "Web3的盈利模式"
-description: "Web3的盈利模式"
+description: "Web3时代的盈利模式"
 slug: web3-business-model
 pubDate: "Dec 05 2022"
 authors: [richzhao]

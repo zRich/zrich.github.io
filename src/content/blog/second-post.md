@@ -1,6 +1,6 @@
 ---
 title: "重新定义数据"
-description: "重新定义数据"
+description: "数据的定义已经发生变化，并且还在变化当中"
 # slug: redefine-data
 pubDate: "Oct 08 2022"
 authors: [richzhao]

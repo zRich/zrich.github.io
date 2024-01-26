@@ -1,7 +1,7 @@
 ---
 title: "提高社区工作透明度"
 slug: osc-001
-description: "透明的重要性"
+description: "透明性对开源社区的重要性"
 pubDate: "Oct 02 2022"
 authors: [richzhao]
 heroImage: "/images/IMG_1444.JPG"
