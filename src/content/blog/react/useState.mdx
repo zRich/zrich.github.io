@@ -1,0 +1,221 @@
+---
+title: "React Hook 之 useState"
+slug: react-hook-01
+description: "React Hook 之 useState"
+pubDate: "Jan 26 2024"
+authors: [richzhao]
+heroImage: "/images/react/react-hooks.webp"
+tags: [React, Hook, Web, Frontend]
+---
+
+## 前言
+
+React Hook 是 React 16.8.0 新增的特性，它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。
+
+### useState 基本使用
+
+useState 是一个函数，它的作用是声明一个 state 变量，我们可以在函数组件中使用它。
+
+注意，你必须做组件的顶层调用，不能在循环、条件判断或者子函数中调用。
+
+```jsx
+import React, { useState } from "react";
+
+function Example() {
+  // 声明一个新的叫做 “count” 的 state 变量
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      {/* setCount 会更新 count 的值 */}
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
+
+在这个例子中，我们声明了一个叫做 count 的 state 变量，然后把它设为 0。React 会在重复渲染时记住它当前的值，并且提供最新的值给我们的函数。
+
+正如这个例子中所展示的，useState 会返回一对值：当前状态和一个让你更新它的函数，你可以在事件处理函数中或其他一些地方调用这个函数。它类似 class 组件的 this.setState，但是它不会把新的 state 和旧的 state 进行合并。
+
+useState 的命名约定是基于[数组的解构](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Array_destructuring)。useState 返回的第一个值叫做 count，第二个值叫做 setCount，但是你可以使用任何名称。
+
+声明 useState 有一个参数，这个参数是 state 的初始值，这个参数只会在第一次渲染时被用到。
+
+在 `Stict Mode` 中，Recat 会调用你的初始化函数两次以帮助你发现不安全的操作。这是开发模式下的特性，生产模式下不会有这个问题。如果你的初始化函数是 **纯函数**，在两次调用之间没有副作用。
+
+### Set 函数的使用
+
+useState 声明返回的第二个值是一个函数，它允许你更新 state，它接收一个新的值并触发组件的再次渲染。
+
+你可以选择把新的 state 的值传给 set 函数，或者传一个函数给它，这个函数接收之前的 state 作为第一个参数。
+
+```jsx
+const [name, setName] = useState('Edward');
+
+function handleClick() {
+  setName('Taylor');
+  setAge(a => a + 1);
+  // ...
+```
+
+如果你将一个函数传给 setState，该函数被当作一个 updater 函数，它将接收先前的 state，并返回一个新的值。 React 会把这个 updater 函数放进一个队列里，并触发组件的重新渲染，但是它不会立即更新 state。 React 会在后续的渲染过程中读取这个值，并且用它来代替之前传递给 setState 的值。
+
+注意：
+- set 函数仅仅中下一次渲染时才会更新 state，所以你不能在事件处理函数中立即读取更新后的值。
+- 如果新值与之前的值相同，React 会跳过渲染，这样可以避免不必要的渲染，提高性能。
+- React 批更新状态，如果你多次调用 setState，React 会把多次更新合并成一次更新，只触发一次重新渲染。
+- 只有中本组件的渲染中，才能调用 set 函数，否则会报错。
+- 在 `Stict Mode` 中，Recat 会调用你的初始化函数两次以帮助你发现不安全的操作。
+
+举个例子：
+
+假设 age 的初始值是 42，然后我们在事件处理函数中调用三次 setAge：
+```jsx
+function handleClick() {
+  setAge(age + 1); // setAge(42 + 1)
+  setAge(age + 1); // setAge(42 + 1)
+  setAge(age + 1); // setAge(42 + 1)
+}
+```
+
+在这个例子中，React 会把这三次更新合并成一次更新，只触发一次重新渲染，所以 age 的值是 43。
+如果我们把 setAge 的参数改成一个函数，React 就不会合并更新，而是会触发三次重新渲染，所以 age 的值是 45。
+
+```jsx
+function handleClick() {
+  setAge(a => a + 1); // setAge(42 + 1)
+  setAge(a => a + 1); // setAge(43 + 1)
+  setAge(a => a + 1); // setAge(44 + 1)
+}
+```
+在这里 `a => a + 1` 就是一个 updater 函数，它接收先前的 state，并计算一个新的值。React 把这个 updater 函数放进一个队列里，在下次渲染时，React 按照顺序读取队列里的 updater 函数，并把它们应用到先前的 state 上，然后把最后的结果作为新的 state。
+
+1. `a => a + 1` 读取先前的 state，它的值是 42，然后计算一个新的值 43。
+2. `a => a + 1` 读取先前的 state，它的值是 43，然后计算一个新的值 44。
+3. `a => a + 1` 读取先前的 state，它的值是 44，然后计算一个新的值 45。
+
+### 更新对象和数组
+
+React 把状态当作是一个不可变的对象，所以你不能直接修改它。如果你想更新对象或者数组，可以创建一个新的对象或者数组，然后把它传给 set 函数。
+
+```jsx
+const [user, setUser] = useState({
+  name: 'Edward',
+  age: 42,
+});
+
+function handleClick() {
+  setUser({
+    ...user,
+    age: user.age + 1,
+  });
+}
+```
+
+### 避免创建初始状态
+
+```jsx
+function TodoList() {
+  const [todos, setTodos] = useState(createInitialTodos());
+  // ...
+```
+
+在这个例子中，我们调用了一个函数来创建初始状态。这样做是可以的，但是每次渲染都会调用`createInitialTodos()`，如何这个函数很慢或者创建的对象很大，那么这个函数会拖慢应用的启动速度。
+
+为了避免这个问题，我们可以传一个函数给 useState，这个函数只会在第一次渲染时被调用。
+
+```jsx
+function TodoList() {
+  const [todos, setTodos] = useState(createInitialTodos);
+  // ...
+```
+
+### 通过 key 重置 State
+
+你可以通过给组件传一个 **不同** 的 key 来重置这个组件的 state。
+
+```jsx
+import { useState } from 'react';
+
+export default function App() {
+  const [version, setVersion] = useState(0);
+
+  function handleReset() {
+    setVersion(version + 1);
+  }
+
+  return (
+    <>
+      <button onClick={handleReset}>Reset</button>
+      <Form key={version} />
+    </>
+  );
+}
+
+function Form() {
+  const [name, setName] = useState('Taylor');
+
+  return (
+    <>
+      <input
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <p>Hello, {name}.</p>
+    </>
+  );
+}
+```
+
+在这个例子中，我们给 Form 组件传了一个 key，当我们点击 Reset 按钮时，会更新 Form 组件的 state，这个 state 会传给 Form 组件，Form 组件的 key 也会更新，这样 React 就会卸载旧的 Form 组件，然后渲染一个新的 Form 组件，这个新的 Form 组件的 state 是初始值。
+
+### 保存上次渲染的信息
+
+```jsx
+export default function CountLabel({ count }) {
+  return <h1>{count}</h1>
+} 
+```
+
+如果你想知道上次更新之后，count 是增加了还是减少了，你可以增加一个状态来保存上次渲染的信息。
+
+```jsx "App.js"
+import { useState } from 'react';
+import CountLabel from './CountLabel.js';
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+      <button onClick={() => setCount(count - 1)}>
+        Decrement
+      </button>
+      <CountLabel count={count} />
+    </>
+  );
+```
+    
+```jsx "CountLabel.js"
+import { useState } from 'react';
+
+export default function CountLabel({ count }) {
+  const [prevCount, setPrevCount] = useState(count);
+  const [trend, setTrend] = useState(null);
+  if (prevCount !== count) {
+    setPrevCount(count);
+    setTrend(count > prevCount ? 'increasing' : 'decreasing');
+  }
+  return (
+    <>
+      <h1>{count}</h1>
+      {trend && <p>The count is {trend}</p>}
+    </>
+  );
+}
+```
+

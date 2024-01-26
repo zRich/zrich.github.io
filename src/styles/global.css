@@ -8,7 +8,7 @@
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
+	--gray: rgba(0,0,0,.54);
 	--gray-light: 229, 233, 240;
 	--gray-dark: 34, 41, 57;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
@@ -16,21 +16,21 @@
 		0 16px 32px rgba(var(--gray), 33%);
 }
 @font-face {
-	font-family: 'Atkinson';
+	font-family: 'Noto Serif SC', serif;
 	src: url('/fonts/atkinson-regular.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
-	font-family: 'Atkinson';
+	font-family: 'Noto Serif SC', serif;
 	src: url('/fonts/atkinson-bold.woff') format('woff');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
 }
 body {
-	font-family: 'Atkinson', sans-serif;
+	font-family: 'Noto Serif SC', serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -59,19 +59,19 @@ h6 {
 	line-height: 1.2;
 }
 h1 {
-	font-size: 3.052em;
+	font-size: 48px;
 }
 h2 {
-	font-size: 2.441em;
+	font-size: 36px;
 }
 h3 {
-	font-size: 1.953em;
+	font-size: 32px;
 }
 h4 {
-	font-size: 1.563em;
+	font-size: 20px;
 }
 h5 {
-	font-size: 1.25em;
+	font-size: 16px;
 }
 strong,
 b {
