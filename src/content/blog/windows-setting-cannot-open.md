@@ -4,7 +4,7 @@ description: "Windows 11 更新之后，无法打开，该如何修复？"
 # slug: win-setting-problem
 pubDate: "Feb 02 2023"
 authors: [richzhao]
-heroImage: "/images/IMG_1444.JPG"
+heroImage: "/images/windows-11-logo.webp"
 tags: [Windows]
 ---
 

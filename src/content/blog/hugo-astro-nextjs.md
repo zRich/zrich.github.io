@@ -4,13 +4,13 @@ slug: static-website
 description: "静态网站工具比较。Hugo，Astro，NextJS"
 pubDate: "Jan 27 2023"
 authors: [richzhao]
-heroImage: "/images/IMG_1444.JPG"
+heroImage: "/images/astro-logo-light.png"
 tags: [Web3, WebSite, Blog, Docs]
 ---
 
-![Cover Page](/images/IMG_1444.JPG)
+![Cover Page](/images/astro-logo-light.png)
 
-## 什么是静态网站 
+## 什么是静态网站
 
 静态网站，顾名思义，是内容相对更新不是很快的网站。个人网站，公司网站，文档等由于更新不频率，都时候用静态网站。操作制作静态网站直接用 **HTML** + **CSS** + **JavaScript**，现在已经有了很多制作静态网站的工具。比如，本文要将的 Hugo，Astro，NextJS 都可以用来做静态网站，当然它们的功能不止是做静态网站。
 

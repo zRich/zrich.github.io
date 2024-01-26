@@ -4,7 +4,7 @@ description: "过渡用一下Astro"
 # slug: win-setting-problem
 pubDate: "Jan 16 2024"
 authors: [richzhao]
-heroImage: "/images/IMG_1444.JPG"
+heroImage: "/images/aws/aws_logo.png"
 tags: [Astro, AWS, domain name, 域名]
 ---
 
