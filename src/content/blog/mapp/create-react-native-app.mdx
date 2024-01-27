@@ -1,0 +1,33 @@
+---
+title: "1st React Native App"
+description: "创建 React Native App 最佳实践"
+pubDate: "Jan 27 2024"
+authors: [richzhao]
+heroImage: "/images/react/react-native.svg"
+tags: [React Native, App, React, iOS, Expo, Android]
+---
+
+React Native 官方提供两种创建 React Native App 的方式：
+
+- [Expo](https://expo.io/)：Expo 是一个开源工具链，用于构建、发布和管理 iOS 和 Android 上的 React Native 应用程序。
+- React Native CLI
+
+在我现在的系统上，使用 React Native CLI 创建 React Native App 会遇到很多问题，所以我选择使用 Expo 来创建 React Native App。
+
+我的最佳实践是：
+
+1. 使用 Expo 创建 React Native App
+2. 使用 yarn 而不是 npm
+3. 使用 TypeScript 而不是 JavaScript
+
+以下是我创建 React Native App 的步骤：
+
+```bash
+yarn create expo-app --template
+```
+根据提示选择模板，我选择的是 `blank (TypeScript)`。
+
+完成之后，进行项目目录然后，执行 `yarn ios` 即可启动 iOS 模拟器。
+
+注意，此时用 VS Code 打开项目。VS Code 会报找不到 `"extends": "expo/tsconfig.base"` 的错误。
+重新启动 `TS Server` 即可解决。按 `Shift + Command + P`，输入 `TypeScript: Restart TS Server` 即可。

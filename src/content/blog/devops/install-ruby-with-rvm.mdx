@@ -1,0 +1,49 @@
+---
+title: "使用 rvm 安装 Ruby"
+description: "如何在Mac上安装 Ruby 3.0.0"
+pubDate: "Jan 27 2024"
+authors: [richzhao]
+heroImage: "/images/devops/Ruby_logo.svg"
+tags: [DevOps, Git，Ruby， rvm]
+---
+
+之所以要安装 Ruby 是因为开发 React Native 需要安装 CocoaPods，而安装 CocoaPods 需要安装 Ruby。Mac 上自带的 Ruby 版本太低，所以需要安装新版本的 Ruby。
+
+
+## 设置代理
+安装 rvm 时，需要从网络上下载文件，如果网络不通，可以使用代理
+
+如果没有设置代理，可以使用下面的命令设置代理
+
+```bash
+export http_proxy="socks5://127.0.0.1:51843"
+export https_proxy="socks5://127.0.0.1:51843"
+```
+
+## 安装 rvm
+
+```bash
+curl -sSL https://get.rvm.io | bash -s stable
+```
+
+添加 key
+
+```bash
+curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+```
+
+## 安装 Ruby
+
+Ruby 2.7.2 和 3 需要 openssl 1.1，而不是最新的 3。所以需要指定 openssl 版本
+可以使用下面的命令查看 openssl 1.1 的安装路径
+
+```bash
+brew --prefix openssl@1.1
+```
+
+在安装 Ruby 时，指定 openssl 的安装路径
+
+```bash
+PKG_CONFIG_PATH=`brew --prefix openssl@1.1`/lib/pkgconfig rvm install ruby@latest --with-openssl-dir=`brew --prefix openssl@1.1`
+```

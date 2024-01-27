@@ -119,10 +119,11 @@ pre > code {
 	all: unset;
 }
 blockquote {
-	border-left: 4px solid var(--accent);
+	border-left: 4px solid var(--gray);
 	padding: 0 0 0 20px;
 	margin: 0px;
-	font-size: 1.333em;
+	font-size: 1.25rem;
+	color: rgb(var(--gray-dark));
 }
 hr {
 	border: none;

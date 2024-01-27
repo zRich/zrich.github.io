@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-bvzihdzo> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.png"><meta name="generator" content="Astro v4.1.1"><!-- Canonical URL --><link rel="canonical" href="https://zhaozhenhua.com/devops/git-best-practics/"><!-- Primary Meta Tags --><title>Git 最佳实践</title><meta name="title" content="Git 最佳实践"><meta name="description" content="如何用好 Git"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://zhaozhenhua.com/devops/git-best-practics/"><meta property="og:title" content="Git 最佳实践"><meta property="og:description" content="如何用好 Git"><meta property="og:image" content="https://zhaozhenhua.com/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://zhaozhenhua.com/devops/git-best-practics/"><meta property="twitter:title" content="Git 最佳实践"><meta property="twitter:description" content="如何用好 Git"><meta property="twitter:image" content="https://zhaozhenhua.com/blog-placeholder-1.jpg"><style>:root{--accent: #2337ff;--accent-dark: #000d8a;--black: 15, 18, 25;--gray: rgba(0,0,0,.54);--gray-light: 229, 233, 240;--gray-dark: 34, 41, 57;--gray-gradient: rgba(var(--gray-light), 50%), #fff;--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%)}body{font-family:"Noto Serif SC",serif;margin:0;padding:0;text-align:left;background:linear-gradient(var(--gray-gradient)) no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:rgb(var(--gray-dark));font-size:20px;line-height:1.7}main{width:100%;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:0 0 .5rem;color:rgb(var(--black));line-height:1.2}h1{font-size:48px}h2{font-size:36px}h3{font-size:32px}h4{font-size:21px}h5{font-size:16px;color:rgb(var(--gray));margin-top:1.25rem}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}.prose p{margin-bottom:2em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%}img{max-width:100%;height:auto;border-radius:8px}code{padding:2px 5px;background-color:rgb(var(--gray-light));border-radius:2px}pre{padding:1.5em;border-radius:8px}pre>code{all:unset}blockquote{border-left:4px solid var(--gray);padding:0 0 0 20px;margin:0;font-size:1.25rem;color:rgb(var(--gray-dark))}hr{border:none;border-top:1px solid rgb(var(--gray-light))}@media (max-width: 1320px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#fff;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media (max-width: 720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}
+main[data-astro-cid-bvzihdzo]{width:calc(100% - 2em);max-width:100%;margin:0}.hero-image[data-astro-cid-bvzihdzo]{width:100%}.hero-image[data-astro-cid-bvzihdzo] img[data-astro-cid-bvzihdzo]{display:block;margin:0 auto;border-radius:12px;width:720px;box-shadow:var(--box-shadow)}.prose[data-astro-cid-bvzihdzo]{width:720px;max-width:calc(100% - 2em);margin:auto;padding:1em;color:rgb(var(--gray-dark))}.title[data-astro-cid-bvzihdzo]{margin-bottom:1em;padding:1em 0;text-align:center;line-height:1}.title[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{margin:0 0 .5em}.date[data-astro-cid-bvzihdzo]{margin-bottom:.5em;color:rgb(var(--gray))}.last-updated-on[data-astro-cid-bvzihdzo]{font-style:italic;color:rgb(var(--gray))}
+</style></head> <body data-astro-cid-bvzihdzo> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/" data-astro-cid-3ef6ksr2>Rich&#39;s Blog</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <!-- <HeaderLink href="/">Home</HeaderLink> --> <!-- <HeaderLink href="/blog">Blog</HeaderLink> --> <!-- <HeaderLink href="/about">About</HeaderLink> --> </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://github.com/zRich" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to My GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> </div> </nav> </header>  <main data-astro-cid-bvzihdzo> <article data-astro-cid-bvzihdzo> <div class="hero-image" data-astro-cid-bvzihdzo> <img src="/images/devops/Git-logo.svg" alt="" data-astro-cid-bvzihdzo> </div> <div class="prose" data-astro-cid-bvzihdzo> <div class="title" data-astro-cid-bvzihdzo> <div class="date" data-astro-cid-bvzihdzo> <time datetime="2024-01-26T16:00:00.000Z"> Jan 27, 2024 </time>  </div> <h1 data-astro-cid-bvzihdzo>Git 最佳实践</h1> <hr data-astro-cid-bvzihdzo> </div>  <h1 id="git-commit-best-practices">Git Commit Best Practices</h1>
+<h2 id="basic-rules">Basic Rules</h2>
+<h3 id="commit-related-changes">Commit Related Changes</h3>
+<p>A commit should be a wrapper for related changes. For example, fixing two different bugs should produce two separate commits. Small commits make it easier for other developers to understand the changes and roll them back if something went wrong.
+With tools like the staging area and the ability to stage only parts of a file, Git makes it easy to create very granular commits.</p>
+<h3 id="commit-often">Commit Often</h3>
+<p>Committing often keeps your commits small and, again, helps you commit only related changes. Moreover, it allows you to share your code more frequently with others. That way it‘s easier for everyone to integrate changes regularly and avoid having merge conflicts. Having large commits and sharing them infrequently, in contrast, makes it hard to solve conflicts.</p>
+<h3 id="dont-commit-half-done-work">Don’t Commit Half-Done Work</h3>
+<p>You should only commit code when a logical component is completed.
+Split a feature‘s implementation into logical chunks that can be completed quickly so that you can commit often. If you‘re tempted to commit just because you need a clean working copy (to check out a branch, pull in changes, etc.) consider using Git‘s «Stash» feature instead.</p>
+<h3 id="test-your-code-before-you-commit">Test Your Code Before You Commit</h3>
+<p>Resist the temptation to commit something that you «think» is completed. Test it thoroughly to make sure it really is completed and has no side effects (as far as one can tell). While committing half-baked things in your local repository only requires you to forgive yourself, having your code tested is even more important when it comes to pushing/sharing your code with others.</p>
+<h3 id="write-good-commit-messages">Write Good Commit Messages</h3>
+<p>Begin your message with a short summary of your changes (up to 50 characters as a guideline). Separate it from
+the following body by including a blank line. The body of your message should provide detailed answers to the following questions:
+– What was the motivation for the change? – How does it differ from the previous
+implementation?
+Use the imperative, present tense («change», not «changed» or «changes») to be consistent with generated messages from commands like git merge.
+Having your files backed up on a remote server is a nice side effect of having a version control system. But you should not use your VCS like it was a backup system. When doing version control, you should pay attention to committing semantically (see «related changes») - you shouldn‘t just cram in files.</p>
+<h3 id="use-branches">Use Branches</h3>
+<p>Branching is one of Git‘s most powerful features - and this is not by accident: quick and easy branching was a central requirement from day one. Branches are the perfect tool to help you avoid mixing up different lines of development. You should use branches extensively in your development workflows: for new features, bug fixes, ideas…</p>
+<h3 id="agree-on-a-workflow">Agree on A Workflow</h3>
+<p>Git lets you pick from a lot of different workflows: long-running branches, topic branches, merge or rebase, git-flow… Which one you choose depends on a couple of factors: your project, your overall development and deployment workflows and (maybe most importantly) on your and your teammates‘ personal preferences. However you choose to work, just make sure to agree on a common workflow that everyone follows.</p>
+<p>The following document is based on experience doing code development, bug troubleshooting and code review across a number of projects using GIT, including libvirt, QEMU and OpenStack Nova. Examination of other open source projects such as the Kernel, CoreUtils, GNULIB and more suggested they all follow a fairly common practice. It is motivated by a desire to improve the quality of the Nova GIT history. Quality is a hard term to define in computing; one man’s “Thing of Beauty” is another man’s “Evil Hack”. We can, however, come up with some general guidelines for what to do, or conversely what not to do, when publishing GIT commits for merge with a project, in this case, OpenStack.</p>
+<p>This topic can be split into two areas of concern</p>
+<ul>
+<li>The structured set/split of the code changes</li>
+<li>The information provided in the commit message</li>
+</ul>
+<h2 id="formatting-rules">Formatting Rules</h2>
+<ul>
+<li>
+<p>Capitalized, short <strong>(50 chars or less)</strong> summary</p>
+</li>
+<li>
+<p>More detailed explanatory text, if necessary.  <strong>Wrap it to about 72 characters</strong>.  In some contexts, the first line is treated as the subject of an email and the rest of the text as the body.  The blank line separating the summary from the body is critical (unless you omit the body entirely); tools like rebase can get confused if you run the two together.</p>
+</li>
+<li>
+<p><strong>Always leave the second line blank.</strong></p>
+</li>
+<li>
+<p>Write your commit message in the imperative: “Fix bug” and not “Fixed bug” or “Fixes bug.”  This convention matches up with commit messages generated by commands like git merge and git revert.</p>
+</li>
+<li>
+<p>Further paragraphs come after blank lines.</p>
+<ul>
+<li>Bullet points are okay, too</li>
+<li>Typically a hyphen or asterisk is used for the bullet, preceded by a single space, with blank lines in between, but conventions vary here</li>
+<li>Use a hanging indent</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples-of-good-practice">Examples of good practice</h3>
+<p><strong>Example 1</strong> (no description, only summary)</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit 3114a97ba188895daff4a3d337b2c73855d4632d</span></span>
+<span class="line"><span>  Author: [removed]</span></span>
+<span class="line"><span>  Date:   Mon Jun 11 17:16:10 2012 +0100</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    Update default policies for KVM guest PIT &amp; RTC timers</span></span></code></pre>
+<p><strong>Example 2</strong> (description as bullet points)</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit ae878fc8b9761d099a4145617e4a48cbeb390623</span></span>
+<span class="line"><span>  Author: [removed]</span></span>
+<span class="line"><span>  Date:   Fri Jun 1 01:44:02 2012 +0000</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    Refactor libvirt create calls</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>     - Minimize duplicated code for create</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>     - Make wait_for_destroy happen on shutdown instead of undefine</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>     - Allow for destruction of an instance while leaving the domain</span></span></code></pre>
+<p><strong>Example 3</strong> (description as plain text)</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit 31336b35b4604f70150d0073d77dbf63b9bf7598</span></span>
+<span class="line"><span>  Author: [removed]</span></span>
+<span class="line"><span>  Date:   Wed Jun 6 22:45:25 2012 -0400</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    Add CPU arch filter scheduler support</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    In a mixed environment of running different CPU architectures,</span></span>
+<span class="line"><span>    one would not want to run an ARM instance on a X86_64 host and</span></span>
+<span class="line"><span>    vice versa.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    This scheduler filter option will prevent instances running</span></span>
+<span class="line"><span>    on a host that it is not intended for.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    The libvirt driver queries the guest capabilities of the</span></span>
+<span class="line"><span>    host and stores the guest arches in the permitted_instances_types</span></span>
+<span class="line"><span>    list in the cpu_info dict of the host.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    The Xen equivalent will be done later in another commit.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    The arch filter will compare the instance arch against</span></span>
+<span class="line"><span>    the permitted_instances_types of a host</span></span>
+<span class="line"><span>    and filter out invalid hosts.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    Also adds ARM as a valid arch to the filter.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    The ArchFilter is not turned on by default.</span></span></code></pre>  </div> </article> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2024 Zhao Zhenhua. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://github.com/zRich" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to My GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> </div> </footer>  </body></html>

@@ -1,0 +1,473 @@
+---
+title: "RESTful Web API 设计"
+description: "RESTful Web API 设计最佳实践"
+pubDate: "Jan 27 2024"
+authors: [richzhao]
+heroImage: "/images/devops/OpenAPI_Pantone-768x204.png"
+tags: [React, Hook, Web, Frontend]
+---
+
+>本文是根据微软 [RESTful Web API 设计最佳实践](https://docs.microsoft.com/zh-cn/azure/architecture/best-practices/api-design) 搬过来的，仅供学习参考。
+
+大多数新式 Web 应用程序都会公开 API，客户端可以使用这些 API 来与该应用程序交互。 设计良好的 Web API 应旨在支持：
+
+平台独立性。 不管 API 的内部实现方式如何，任何客户端都应该能够调用该 API。 这就需要使用标准协议并创建一种机制，使客户端和 Web 服务能够就交换数据的格式达成一致。
+
+服务演变。 Web API 应能在不影响客户端应用程序的情况下改进和添加功能。 随着 API 的发展，现有客户端应用程序应可继续运行而无需进行任何修改。 所有功能应该是可发现的，使客户端应用程序能够充分利用它。
+
+本指南阐述在设计 Web API 时应考虑的问题。
+
+什么是 REST？
+在 2000 年，Roy Fielding 提议使用表述性状态转移 (REST) 作为设计 Web 服务的体系性方法。 REST 是一种基于超媒体构建分布式系统的架构风格。 REST 独立于任何基础协议，并且不一定绑定到 HTTP。 但是，最常见的 REST API 实现会使用 HTTP 作为应用程序协议，本指南重点介绍如何为 HTTP 设计 REST API。
+
+基于 HTTP 的 REST 的主要优势在于它使用开放标准，不会绑定 API 的实现，也不会将客户端应用程序绑定到任何具体实现。 例如，可以使用 ASP.NET 编写 REST Web 服务，而客户端应用程序能够使用任何语言或工具来发起 HTTP 请求和分析 HTTP 响应。
+
+下面是使用 HTTP 设计 RESTful API 时的一些主要原则：
+
+REST API 围绕资源设计，资源是可由客户端访问的任何类型的对象、数据或服务。
+
+每个资源有一个标识符，即，唯一标识该资源的 URI。 例如，特定客户订单的 URI 可能是：
+
+```plaintext
+https://adventure-works.com/orders/1
+```
+
+客户端通过交换资源的表示形式来与服务交互。 许多 Web API 使用 JSON 作为交换格式。 例如，对上面所列的 URI 发出 GET 请求可能返回以下响应正文：
+
+```json
+{"orderId":1,"orderValue":99.90,"productId":1,"quantity":1}
+```
+
+REST API 使用统一接口，这有助于分离客户端和服务实现。 对于基于 HTTP 构建的 REST API，统一接口包括使用标准 HTTP 谓词对资源执行操作。 最常见的操作是 GET、POST、PUT、PATCH 和 DELETE。
+
+REST API 使用无状态请求模型。 HTTP 请求应是独立的并可按任意顺序发生，因此保留请求之间的瞬时状态信息并不可行。 信息的唯一存储位置就在资源内，并且每个请求应是原子操作。 此约束可让 Web 服务获得高度可伸缩性，因为无需保留客户端与特定服务器之间的关联。 任何服务器可以处理来自任何客户端的任何请求。 也就是说，其他因素可能会限制可伸缩性。 例如，许多 Web 服务会写入后端数据存储，这可能很难横向扩展。要详细了解横向扩展数据存储的策略，请参阅水平、垂直和功能数据分区。
+
+REST API 由表示形式中包含的超媒体链接驱动。 例如，下面显示了某个订单的 JSON 表示形式。 该表示形式包含一些链接，用于获取或更新与该订单关联的客户。
+
+```JSON
+{
+  "orderID":3,
+  "productID":2,
+  "quantity":4,
+  "orderValue":16.60,
+  "links": [
+    {"rel":"product","href":"https://adventure-works.com/customers/3", "action":"GET" },
+    {"rel":"product","href":"https://adventure-works.com/customers/3", "action":"PUT" }
+  ]
+}
+```
+
+2008 年，Leonard Richardson 提议对 Web API 使用以下成熟度模型：
+
+级别 0：定义一个 URI，所有操作是对此 URI 发出的 POST 请求。
+级别 1：为各个资源单独创建 URI。
+级别 2：使用 HTTP 方法来定义对资源执行的操作。
+级别 3：使用超媒体（HATEOAS，如下所述）。
+根据 Fielding 的定义，级别 3 对应于某个真正的 RESTful API。 在实践中，许多发布的 Web API 大致处于级别 2。
+
+围绕资源组织 API 设计
+侧重于 Web API 公开的业务实体。 例如，在电子商务系统中，主实体可能是客户和订单。 可以通过发送包含订单信息的 HTTP POST 请求来创建订单。 HTTP 响应指示下单是否成功。 如果可能，资源 URI 应基于名词（资源）而不是动词（对资源执行的操作）。
+
+```plaintext
+https://adventure-works.com/orders // Good
+https://adventure-works.com/create-order // Avoid
+
+```
+
+资源无需基于单个物理数据项。 例如，订单资源可以在内部实现为关系数据库中的多个表，但以单个实体的形式提供给客户端。 避免创建反映数据库内部结构的 API。 REST 旨在为实体建模，以及为应用程序可对这些实体执行的操作建模。 不应将内部实现公开给客户端。
+
+实体通常分组成集合（订单、客户）。 集合是不同于集合中的子项的资源，应具有自身的 URI。 例如，以下 URI 可以表示订单集合：
+
+```json
+https://adventure-works.com/orders
+```
+向集合 URI 发送 HTTP GET 请求可检索集合中的子项列表。 集合中的每个子项也有自身的唯一 URI。 对子项的 URI 发出 HTTP GET 请求会返回该子项的详细信息。
+
+在 URI 中采用一致的命名约定。 一般而言，有效的做法是对引用集合的 URI 使用复数名词。 最好是将集合和项的 URI 组织成层次结构。 例如，/customers 是客户集合的路径，/customers/5 是 ID 为 5 的客户的路径。 这种方法有助于使 Web API 保持直观。 此外，有许多 Web API 框架可以基于参数化 URI 路径来路由请求，因此，你可以对路径 /customers/\{id\} 定义路由。
+
+还需要考虑不同类型的资源之间的关系，以及如何公开这些关联。 例如，/customers/5/orders 可以表示客户 5 的所有订单。 我们还可以改变思维方向，使用类似于 /orders/99/customer 的 URI 来表示从订单到客户的关联。 但是，过度扩展此模型可能会变得难以实现。 更好的解决方案是在 HTTP 响应消息的正文中提供指向关联资源的可导航链接。 使用 HATEOAS 启用对相关资源的导航部分详细介绍了该机制。
+
+在更复杂的系统中，我们往往提供 URI（例如 /customers/1/orders/99/products），使客户端能够通过多个关系级别进行导航。 但是，如果资源之间的关系在将来更改，此级别的复杂性可能很难维护并且不够灵活。 相反，请尽量让 URI 相对简单。 应用程序获取对某个资源的引用后，应该可以使用此引用去查找与该资源相关的项目。 可将前面的查询替换为 URI /customers/1/orders 以查找客户 1 的所有订单，然后替换为 /orders/99/products 以查找此订单中的产品。
+
+ 提示
+
+避免请求复杂度超过集合/项目/集合的资源 URI。
+
+另一个因素是所有 Web 请求都会增加 Web 服务器的负载。 请求越多，负载就越大。 因此，请尽量避免使用公开大量小型资源的“琐碎”Web API。 此类 API 可能需要客户端应用程序发送多个请求才能找到它需要的所有数据。 我们建议将数据非规范化，并将相关信息合并成可通过单个请求检索的较大资源。 但是，需要权衡客户端获取不需要的数据所产生的开销。 检索大型对象可能增大请求的延迟时间，并产生额外的带宽成本。 有关这些性能反模式的详细信息，请参阅琐碎 I/O 和超量提取。
+
+避免在 Web API 与底层数据源之间引入依赖关系。 例如，如果数据存储在关系数据库中，则 Web API 不需要将每个表公开为资源集合。 事实上，这可以算作一种粗劣的设计。 请考虑将 Web API 视为数据库的抽象。 如有必要，可在数据库与 Web API 之间引入映射层。 这样，对于底层数据库方案所做的更改不会影响客户端应用程序。
+
+最后，可能无法将 Web API 实现的每个操作都映射到特定资源。 可以通过 HTTP 请求处理此类非资源场景，这些请求调用某个函数并将结果作为 HTTP 响应消息返回。 例如，实现简单计算器操作（例如，加法和减法）的 Web API 可以提供公开这些操作作为伪资源的 URI，并使用查询字符串来指定所需的参数。 例如，向 URI /add?operand1=99&operand2=1 发出 GET 请求会返回正文包含值 100 的响应消息。 但是，请尽量少使用这些形式的 URI。
+
+根据 HTTP 方法定义 API 操作
+HTTP 协议定义了大量为请求赋于语义的方法。 大多数 RESTful Web API 使用的常见 HTTP 方法是：
+
+GET 检索位于指定 URI 处的资源的表示形式。 响应消息的正文包含所请求资源的详细信息。
+POST 在指定的 URI 处创建新资源。 请求消息的正文将提供新资源的详细信息。 请注意，POST 还用于触发不实际创建资源的操作。
+PUT 在指定的 URI 处创建或替换资源。 请求消息的正文指定要创建或更新的资源。
+PATCH 对资源执行部分更新。 请求正文包含要应用到资源的一组更改。
+DELETE 删除位于指定 URI 处的资源。
+特定请求的影响应取决于资源是集合还是单个子项。 下表使用电子商务示例汇总了大多数 RESTful 实现所采用的常见约定。 请注意，并非所有这些请求都可以实现，具体取决于特定方案。
+
+资源	POST	GET	PUT	DELETE
+/customers	创建新客户	检索所有客户	批量更新客户	删除所有客户
+/customers/1	错误	检索客户 1 的详细信息	如果客户 1 存在，则更新其详细信息	删除客户 1
+/customers/1/orders	创建客户 1 的新订单	检索客户 1 的所有订单	批量更新客户 1 的订单	删除客户 1 的所有订单
+POST、PUT 和 PATCH 之间的差异可能会引起混淆。
+
+POST 请求创建资源。 服务器为新资源分配 URI，并将该 URI 返回给客户端。 在 REST 模型中，我们经常向集合应用 POST 请求。 新资源将添加到集合中。 还可以使用 POST 请求将待处理数据提交到现有资源，且不创建任何新资源。
+
+PUT 请求创建资源或更新现有资源。 客户端指定资源的 URI。 请求正文包含资源的完整表示形式。 如果已存在具有此 URI 的资源，则替换该资源。 否则创建新资源（如果服务器支持此操作）。 PUT 请求往往应用到单项资源（例如特定的客户）而不是集合。 服务器可能支持通过 PUT 更新，但不支持通过 PUT 执行创建。 是否支持通过 PUT 执行创建取决于在创建某个资源之前，客户端能否以有意义的方式向该资源分配 URI。 如果不能，则可以使用 POST 来创建资源，并使用 PUT 或 PATCH 来执行更新。
+
+PATCH 请求对现有资源执行部分更新。 客户端指定资源的 URI。 请求正文指定要应用到资源的更改集。 这比使用 PUT 更高效，因为客户端只发送更改，而无需发送资源的整个表示形式。 从技术上讲，如果服务器支持，PATCH 也可以创建新资源（通过对一个“null”资源指定一组更新）。
+
+PUT 请求必须是幂等的。 如果客户端多次提交同一个 PUT 请求，结果应始终相同（使用相同的值修改相同的资源）。 无法保证 POST 和 PATCH 请求的幂等性。
+
+符合 HTTP 语义
+本部分阐述在设计符合 HTTP 规范的 API 时的一些典型注意事项。 但是，本部分不会一一介绍具体细节或方案。 如有疑问，请查阅 HTTP 规范。
+
+媒体类型
+如前所述，客户端和服务器交换资源的表示形式。 例如，在 POST 请求中，请求正文包含要创建的资源的表示形式。 在 GET 请求中，响应正文包含已提取的资源的表示形式。
+
+在 HTTP 协议中，格式是使用媒体类型（也称为 MIME 类型）指定的。 对于非二进制数据，大多数 Web API 支持 JSON（媒体类型 = application/json），可能还支持 XML（媒体类型 = application/xml）。
+
+请求或响应中的 Content-Type 标头指定表示形式的格式。 下面是包含 JSON 数据的 POST 请求示例：
+
+```plaintext
+POST https://adventure-works.com/orders HTTP/1.1
+Content-Type: application/json; charset=utf-8
+Content-Length: 57
+{"Id":1,"Name":"Gizmo","Category":"Widgets","Price":1.99}
+```
+
+如果服务器不支持媒体类型，则应返回 HTTP 状态代码 415（不支持的媒体类型）。
+
+客户端请求可以包含一个 Accept 标头，该标头包含客户端可以接受的、来自服务器的响应消息中的媒体类型列表。 例如：
+
+```plaintext
+GET https://adventure-works.com/orders/2 HTTP/1.1
+Accept: application/json
+```
+
+如果服务器无法匹配所列的任何媒体类型，应返回 HTTP 状态代码 406（不可接受）。
+
+GET 方法
+成功的 GET 方法通常返回 HTTP 状态代码 200（正常）。 如果找不到资源，该方法应返回 404（未找到）。
+
+如果请求已完成，但 HTTP 响应中没有包含响应正文，则应返回 HTTP 状态代码 204（无内容）；例如，不产生匹配项的搜索操作可能会通过此行为实现。
+
+POST 方法
+如果 POST 方法创建了新资源，则会返回 HTTP 状态代码 201（已创建）。 新资源的 URI 包含在响应的 Location 标头中。 响应正文包含资源的表示形式。
+
+如果该方法执行了一些处理但未创建新资源，则可以返回 HTTP 状态代码 200，并在响应正文中包含操作结果。 或者，如果没有可返回的结果，该方法可以返回 HTTP 状态代码 204（无内容）但不返回任何响应正文。
+
+如果客户端将无效数据放入请求，服务器应返回 HTTP 状态代码 400（错误的请求）。 响应正文可以包含有关错误的其他信息，或包含可提供更多详细信息的 URI 链接。
+
+PUT 方法
+与 POST 方法一样，如果 PUT 方法创建了新资源，则会返回 HTTP 状态代码 201（已创建）。 如果该方法更新了现有资源，则会返回 200（正常）或 204（无内容）。 在某些情况下，可能无法更新现有资源。 在这种情况下，可考虑返回 HTTP 状态代码 409（冲突）。
+
+请考虑实现可批量更新集合中的多个资源的批量 HTTP PUT 操作。 PUT 请求应指定集合的 URI，而请求正文则应指定要修改的资源的详细信息。 此方法可帮助减少交互成本并提高性能。
+
+PATCH 方法
+客户端可以使用 PATCH 请求向现有资源发送一组修补文档形式的更新。 服务器将处理该修补文档以执行更新。 修补文档不会描述整个资源，而只描述一组要应用的更改。 PATCH 方法的规范 (RFC 5789) 未定义修补文档的特定格式。 必须从请求中的媒体类型推断格式。
+
+JSON 也许是 Web API 的最常用数据格式。 有两种基于 JSON 的主要修补格式，分别称作“JSON 修补”和“JSON 合并修补”。
+
+JSON 合并修补更简单一些。 修补文档的结构与原始 JSON 资源相同，但只包含要更改或添加的字段的子集。 此外，可以通过在修补文档中为字段值指定 null，来删除该字段。 （这意味着，如果原始资源包含显式 null 值，则不适合使用合并修补。）
+
+例如，假设原始资源采用以下 JSON 表示形式：
+
+```JSON
+{
+    "name":"gizmo",
+    "category":"widgets",
+    "color":"blue",
+    "price":10
+}
+```
+
+下面是此资源的可能 JSON 合并修补代码：
+
+```JSON
+{
+    "price":12,
+    "color":null,
+    "size":"small"
+}
+```
+
+此代码告知服务器要更新 price、删除 color 以及添加 size，而不修改 name 与 category。 有关 JSON 合并修补的具体详细信息，请参阅 RFC 7396。 JSON 合并修补的媒体类型是 application/merge-patch+json。
+
+由于修补文档中的 null 具有特殊的含义，如果原始资源包含显式 null 值，则不适合使用合并修补。 此外，修补文档不会指定服务器应用更新的顺序。 此限制是否造成影响具体取决于数据和域。 RFC 6902 中定义的 JSON 修补更灵活。 它以操作序列的形式指定要应用的更改。 操作包括添加、删除、替换、复制和测试（以验证值）。 JSON 修补的媒体类型是 application/json-patch+json。
+
+下面是在处理 PATCH 请求时可能遇到的典型错误状态，以及相应的 HTTP 状态代码。
+
+添加状态	HTTP 状态代码
+修补文档格式不受支持。	415（媒体类型不受支持）
+修补文档的格式不正确。	400（错误的请求）
+修补文档有效，但无法将更改应用到处于当前状态的资源。	409（冲突）
+DELETE 方法
+如果删除操作成功，Web 服务器应以 HTTP 状态代码 204（无内容）做出响应，指示已成功处理该过程，但响应正文不包含其他信息。 如果资源不存在，Web 服务器可以返回 HTTP 404（未找到）。
+
+异步操作
+有时，POST、PUT、PATCH 或 DELETE 操作可能需要一段处理时间才能完成。 如果需要等待该操作完成后才能向客户端发送响应，可能会造成不可接受的延迟。 在这种情况下，请考虑将该操作设置为异步操作。 返回 HTTP 状态代码 202（已接受），指示该请求已接受进行处理，但尚未完成。
+
+应公开一个可返回异步请求状态的终结点，使客户端能够通过轮询状态终结点来监视状态。 在 202 响应的 Location 标头中包含状态终结点的 URI。 例如：
+
+```plaintext
+HTTP/1.1 202 Accepted
+Location: /api/status/12345
+```
+
+如果客户端向此终结点发送 GET 请求，响应中应包含该请求的当前状态。 （可选）响应中还可以包含预计完成时间，或者用于取消操作的链接。
+
+```plaintext
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "status":"In progress",
+    "link": { "rel":"cancel", "method":"delete", "href":"/api/status/12345" }
+}
+```
+
+如果异步操作创建了新资源，则该操作完成后，状态终结点应返回状态代码 303（查看其他）。 在 303 响应中，包含一个 Location 标头用于提供新资源的 URI：
+
+```plaintext
+HTTP/1.1 303 See Other
+Location: /api/orders/12345
+```
+
+有关如何实现此方法的详细信息，请参阅为长时间运行的请求提供异步支持和异步请求-答复模式。
+
+消息正文中的空集
+任何时候成功响应的正文为空，状态码都应为 204（无内容）。 对于空集，例如对没有项目的筛选请求的响应，状态代码仍应为 204（无内容），而不是 200（正常）。
+
+数据筛选和分页
+通过单个 URI 公开资源的集合可能会导致应用程序在只需一部分信息时提取大量数据。 例如，假设某个客户端应用程序需要查找成本超过特定值的所有订单。 它可以从 /orders URI 检索所有订单，然后在客户端筛选这些订单。 显然，此过程的效率非常低下。 它浪费了托管 Web API 的服务器的网络带宽和处理能力。
+
+API 可以允许在 URI 的查询字符串中传递筛选器，例如 /orders?minCost=n。 然后，Web API 负责分析和处理查询字符串中的 minCost 参数并在服务器端返回筛选后的结果。
+
+对集合资源执行的 GET 请求可能返回大量的项。 应将 Web API 设计为限制任何单个请求返回的数据量。 请考虑支持查询字符串指定要检索的最大项数和集合中的起始偏移量。 例如：
+
+```plaintext
+/orders?limit=25&offset=50
+```
+
+此外，请考虑对返回的项数指定上限，以防拒绝服务攻击。 若要帮助客户端应用程序，返回分页数据的 GET 请求还应包含某种形式的元数据，以指示集合中可用的资源总数。
+
+可以通过提供一个将字段名称用作值的 soft 参数（例如 /orders?sort=ProductID），使用类似的策略对提取的数据排序。 但是，此方法会对缓存产生负面影响，因为查询字符串参数构成许多缓存实现用作缓存数据的键的资源标识符的一部分。
+
+如果每个项包含大量数据，可以扩展此方法来限制针对每个项返回的字段。 例如，可以使用接受以逗号分隔的字段列表的查询字符串参数，例如 /orders?fields=ProductID,Quantity。
+
+为查询字符串中的所有可选参数提供有意义的默认值。 例如，如果实现分页，将 limit 参数设为 10，将 offset 参数设为 0；如果实现排序，将排序参数设为资源的键；如果支持投影，将 fields 参数设为资源中的所有字段。
+
+支持大型二进制资源的部分响应
+资源可能包含大型二进制字段，例如文件或图像。 若要解决不可靠和间歇性连接导致的问题并缩短响应时间，请考虑分块检索此类资源。 为此，对于针对大型资源发出的 GET 请求，Web API 应支持 Accept-Ranges 标头。 此标头指示 GET 操作支持“部分”请求。 客户端应用程序可以提交返回指定为字节范围的资源子集的 GET 请求。
+
+此外，请考虑对这些资源实现 HTTP HEAD 请求。 HEAD 请求与 GET 请求类似，不过，前者只返回描述资源的 HTTP 标头和空消息正文。 客户端应用程序可以发出 HEAD 请求以确定是否要通过使用部分 GET 请求获取某个资源。 例如：
+
+```plaintext
+HEAD https://adventure-works.com/products/10?fields=productImage HTTP/1.1
+```
+
+下面是响应消息的示例：
+
+```plaintext
+HTTP/1.1 200 OK
+
+Accept-Ranges: bytes
+Content-Type: image/jpeg
+Content-Length: 4580
+```
+
+Content-Length 标头指定资源的总大小，Accept-Ranges 标头指示相应的 GET 操作支持部分结果。 客户端应用程序可以使用此信息以较小的区块检索图像。 第一个请求通过使用 Range 标头提取前 2500 个字节：
+
+```plaintext
+GET https://adventure-works.com/products/10?fields=productImage HTTP/1.1
+Range: bytes=0-2499
+```
+响应消息通过返回 HTTP 状态代码 206 指示这是部分响应。 Content-Length 标头指定消息正文中返回的实际字节数（不是资源的大小），Content-Range 标头指示这是该资源的哪一部分（第 0 到 2499 字节，总共 4580 个字节）:
+
+```plaintext
+HTTP/1.1 206 Partial Content
+
+Accept-Ranges: bytes
+Content-Type: image/jpeg
+Content-Length: 2500
+Content-Range: bytes 0-2499/4580
+
+[...]
+```
+来自客户端应用程序的后续请求可以检索资源的剩余部分。
+
+使用 HATEOAS 导航到相关资源
+REST 背后的主要动机之一是它应能够导航整个资源集，而无需事先了解 URI 方案。 每个 HTTP GET 请求应通过响应中包含的超链接返回查找与所请求的对象直接相关的资源所需的信息，还应为它提供描述其中每个资源提供的操作的信息。 此原则称为 HATEOAS 或作为应用程序状态引擎的超文本。 该系统实际上是有限状态机，每个请求的响应包含从一种状态转为另一种状态所需的信息；任何其他信息都不应是必需的。
+
+ 备注
+
+当前没有如何为 HATEOAS 原则建模的任何通用标准。 此部分的示例展示了一个可能的专有解决方案。
+
+例如，若要处理订单与客户之间的关系，可以在订单的表示形式中包含链接，用于指定下单客户可以执行的操作。 下面是可能的表示形式：
+
+```JSON
+{
+  "orderID":3,
+  "productID":2,
+  "quantity":4,
+  "orderValue":16.60,
+  "links":[
+    {
+      "rel":"customer",
+      "href":"https://adventure-works.com/customers/3",
+      "action":"GET",
+      "types":["text/xml","application/json"]
+    },
+    {
+      "rel":"customer",
+      "href":"https://adventure-works.com/customers/3",
+      "action":"PUT",
+      "types":["application/x-www-form-urlencoded"]
+    },
+    {
+      "rel":"customer",
+      "href":"https://adventure-works.com/customers/3",
+      "action":"DELETE",
+      "types":[]
+    },
+    {
+      "rel":"self",
+      "href":"https://adventure-works.com/orders/3",
+      "action":"GET",
+      "types":["text/xml","application/json"]
+    },
+    {
+      "rel":"self",
+      "href":"https://adventure-works.com/orders/3",
+      "action":"PUT",
+      "types":["application/x-www-form-urlencoded"]
+    },
+    {
+      "rel":"self",
+      "href":"https://adventure-works.com/orders/3",
+      "action":"DELETE",
+      "types":[]
+    }]
+}
+```
+
+在此示例中，links 数组包含一组链接。 每个链接表示可对相关实体执行的操作。 每个链接的数据包含关系 ("customer")、URI (https://adventure-works.com/customers/3)、HTTP 方法和支持的 MIME 类型。 这是客户端应用程序在调用操作时所需的全部信息。
+
+links 数组还包含有关已检索的资源本身的自引用信息。 这些链接包含关系 self。
+
+返回的链接集可能会根据资源的状态发生更改。 这就是为何将超文本称作“应用程序状态引擎”的原因。
+
+对 RESTful Web API 进行版本控制
+Web API 一直保持静态的可能性很小。 随着业务需求变化，可能会添加新的资源集合，资源之间的关系可能会更改，并且可能会修改资源中的数据结构。 虽然更新 Web API 以处理新的或不同的需求是一个相对简单的过程，但你必须考虑此类更改将对使用该 Web API 的客户端应用程序造成的影响。 问题在于，尽管设计和实现 Web API 的开发人员可以完全控制该 API，但开发人员对客户端应用程序不具有相同程度的控制，因为这些客户端应用程序可能是由远程运营的第三方组织生成的。 主要规则是要让现有客户端应用程序能够继续不变地正常运行，同时允许新客户端应用程序利用新功能和新资源。
+
+版本控制使 Web API 可以指定它所公开的功能和资源，并且客户端应用程序可以提交定向到特定版本的功能或资源的请求。 以下各节介绍几种不同的方法，其中每一种方法都有其自己的优势和不足。
+
+无版本控制
+这是最简单的方法，它对于一些内部 API 来说可能是可以接受的。 重大更改可以表示为新资源或新链接。 向现有资源添加内容可能未呈现重大更改，因为不应查看此内容的客户端应用程序将会忽略它。
+
+例如，向 URI https://adventure-works.com/customers/3 发出请求应返回包含客户端应用程序所需的 id、name 和 address 字段的单个客户的详细信息：
+
+```plaintext
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"id":3,"name":"Contoso LLC","address":"1 Microsoft Way Redmond WA 98053"}
+```
+ 备注
+
+为简单起见，本部分中所示的示例响应不包含 HATEOAS 链接。
+
+如果 DateCreated 字段已添加到客户资源的架构中，则响应将如下所示：
+
+```plaintext
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"id":3,"name":"Contoso LLC","dateCreated":"2014-09-04T12:11:38.0376089Z","address":"1 Microsoft Way Redmond WA 98053"}
+```
+现有的客户端应用程序可能会继续正常工作（如果能够忽略无法识别的字段），而新的客户端应用程序则可以设计为处理该新字段。 但是，如果对资源的架构进行了更根本的更改（如删除或重命名字段）或资源之间的关系发生更改，则这些更改可能构成重大更改，从而阻止现有客户端应用程序正常工作。 在这些情况下应考虑以下方法之一：
+
+URI 版本管理
+每次修改 Web API 或更改资源的架构时，向每个资源的 URI 添加版本号。 以前存在的 URI 应像以前一样继续运行，并返回符合原始架构的资源。
+
+继续解释前面的示例，如果将 address 字段重构为包含地址的每个构成部分的子字段（例如 streetAddress、city、state 和 zipCode），则可通过包含版本号的 URI（如 https://adventure-works.com/v2/customers/3）公开此版资源：
+
+```plaintext
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"id":3,"name":"Contoso LLC","dateCreated":"2014-09-04T12:11:38.0376089Z","address":{"streetAddress":"1 Microsoft Way","city":"Redmond","state":"WA","zipCode":98053}}
+```
+此版本控制机制非常简单，但依赖于将请求路由到相应终结点的服务器。 但是，随着 Web API 经过多次迭代而变得成熟，服务器必须支持多个不同版本，它可能变得难以处理。 此外，简单而言，在所有情况下客户端应用程序都要提取相同数据（客户 3），因此 URI 实在不应该因版本而有所不同。 此方案也增加了 HATEOAS 实现的复杂性，因为所有链接都需要在其 URI 中包括版本号。
+
+查询字符串版本控制
+不是提供多个 URI，而是可以通过在追加到 HTTP 请求后面的查询字符串中使用参数来指定资源的版本，例如 https://adventure-works.com/customers/3?version=2。 如果 version 参数被较旧的客户端应用程序省略，则应默认为有意义的值（例如 1）。
+
+此方法具有语义优势（即，同一资源始终从同一 URI 进行检索），但它依赖于代码处理请求以分析查询字符串并发送回相应的 HTTP 响应。 此方法也与 URI 版本控制机制一样，增加了实现 HATEOAS 的复杂性。
+
+ 备注
+
+某些较旧的 Web 浏览器和 Web 代理不会缓存在 URI 中包含查询字符串的请求的响应。 这可能会对使用 Web API 以及从此类 Web 浏览器运行的 Web 应用的性能产生不利影响。
+
+标头版本控制
+不是追加版本号作为查询字符串参数，而是可以实现指示资源的版本的自定义标头。 此方法需要客户端应用程序将相应标头添加到所有请求，虽然如果省略了版本标头，处理客户端请求的代码可以使用默认值（版本 1）。 下面的示例使用了名为 Custom-Header 的自定义标头。 此标头的值指示 Web API 的版本。
+
+版本 1：
+
+```plaintext
+GET https://adventure-works.com/customers/3 HTTP/1.1
+Custom-Header: api-version=1
+```
+
+```plaintext
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"id":3,"name":"Contoso LLC","address":"1 Microsoft Way Redmond WA 98053"}
+```
+版本 2：
+
+```plaintext
+GET https://adventure-works.com/customers/3 HTTP/1.1
+Custom-Header: api-version=2
+```
+
+```plaintext
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{"id":3,"name":"Contoso LLC","dateCreated":"2014-09-04T12:11:38.0376089Z","address":{"streetAddress":"1 Microsoft Way","city":"Redmond","state":"WA","zipCode":98053}}
+```
+与前面两个方法一样，实现 HATEOAS 需要在任何链接中加入相应的自定义标头。
+
+媒体类型版本控制
+如本指南前面所述，当客户端应用程序向 Web 服务器发送 HTTP GET 请求时，它应使用 Accept 标头规定它可以处理的内容的格式。 通常，Accept 标头的用途是允许客户端应用程序指定响应的正文应是 XML、JSON 还是客户端可以分析的其他某种常见格式。 但是，可以定义包括以下信息的自定义媒体类型：该信息使客户端应用程序可以指示它所需的资源版本。
+
+下面的示例演示了将 Accept 标头指定为值 application/vnd.adventure-works.v1+json 的请求。 vnd.adventure-works.v1 元素向 Web 服务器指示它应返回资源的版本 1，而 json 元素则指定响应正文的格式应为 JSON：
+
+```plaintext
+GET https://adventure-works.com/customers/3 HTTP/1.1
+Accept: application/vnd.adventure-works.v1+json
+```
+处理请求的代码负责处理 Accept 标头并尽可能采用该值（客户端应用程序可以在 Accept 标头中指定多种格式，在这种情况下，Web 服务器可以在其中选择最适合的格式用于响应正文）。 Web 服务器使用 Content-Type 标头确认响应正文中的数据格式：
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/vnd.adventure-works.v1+json; charset=utf-8
+
+{"id":3,"name":"Contoso LLC","address":"1 Microsoft Way Redmond WA 98053"}
+```
+如果 Accept 标头未指定任何已知的媒体类型，则 Web 服务器可以生成 HTTP 406（不可接受）响应消息或返回使用默认媒体类型的消息。
+
+此方法可以说是最纯粹的版本控制机制并自然地适用于 HATEOAS，后者可以在资源链接中包含相关数据的 MIME 类型。
+
+ 备注
+
+选择版本控制策略时，还应考虑对性能的影响，尤其是在 Web 服务器上缓存时。 URI 版本控制和查询字符串版本控制方案都是缓存友好的，因为同一 URI/查询字符串组合每次都指向相同的数据。
+
+标头版本控制和媒体类型版本控制机制通常需要其他逻辑来检查自定义标头或 Accept 标头中的值。 在大型环境中，使用不同版本的 Web API 的多个客户端可能会在服务器端缓存中生成大量重复数据。 如果客户端应用程序通过实现缓存的代理与 Web 服务器进行通信，并且该代理在当前未在其缓存中保留所请求数据的副本时，仅将请求转发到 Web 服务器，则此问题可能会变得很严重。
