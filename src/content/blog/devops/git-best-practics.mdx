@@ -6,71 +6,76 @@ authors: [richzhao]
 heroImage: "/images/devops/Git-logo.svg"
 tags: [DevOps, Git]
 ---
-# Git Commit Best Practices
 
-## Basic Rules
-### Commit Related Changes
-A commit should be a wrapper for related changes. For example, fixing two different bugs should produce two separate commits. Small commits make it easier for other developers to understand the changes and roll them back if something went wrong.
-With tools like the staging area and the ability to stage only parts of a file, Git makes it easy to create very granular commits.
+> 根据 [Git Commit Best Practices](https://gist.github.com/luismts/495d982e8c5b1a0ced4a57cf3d93cf60) 翻译整理。
+# Git 提交最佳实践
+
+## 基本规则
+
+### 提交相关的更改
+
+一次提交应该是相关更改的包装。例如，修复两个不同的错误应该产生两个单独的提交。小的提交使得其他开发人员更容易理解这些更改，并在出现问题时回滚它们。
 	
-### Commit Often
-Committing often keeps your commits small and, again, helps you commit only related changes. Moreover, it allows you to share your code more frequently with others. That way it‘s easier for everyone to integrate changes regularly and avoid having merge conflicts. Having large commits and sharing them infrequently, in contrast, makes it hard to solve conflicts.
+### 经常提交
 
-### Don't Commit Half-Done Work
-You should only commit code when a logical component is completed.
-Split a feature‘s implementation into logical chunks that can be completed quickly so that you can commit often. If you‘re tempted to commit just because you need a clean working copy (to check out a branch, pull in changes, etc.) consider using Git‘s «Stash» feature instead.
+经常提交可以使您的提交变得更小，并且再次帮助您仅提交相关更改。此外，它允许您更频繁地与他人共享代码。这样，每个人都可以更容易地定期集成更改并避免合并冲突。相比之下，拥有大的提交并且不经常共享它们会使解决冲突变得困难。
 
-### Test Your Code Before You Commit
-Resist the temptation to commit something that you «think» is completed. Test it thoroughly to make sure it really is completed and has no side effects (as far as one can tell). While committing half-baked things in your local repository only requires you to forgive yourself, having your code tested is even more important when it comes to pushing/sharing your code with others.
+### 不要提交未完成的工作
 
-### Write Good Commit Messages
-Begin your message with a short summary of your changes (up to 50 characters as a guideline). Separate it from
-the following body by including a blank line. The body of your message should provide detailed answers to the following questions:
-– What was the motivation for the change? – How does it differ from the previous
-implementation?
-Use the imperative, present tense («change», not «changed» or «changes») to be consistent with generated messages from commands like git merge.
-Having your files backed up on a remote server is a nice side effect of having a version control system. But you should not use your VCS like it was a backup system. When doing version control, you should pay attention to committing semantically (see «related changes») - you shouldn‘t just cram in files.
+你应该只在完成逻辑组件时才提交代码。
+将功能的实现拆分为可以快速完成的逻辑块，以便您可以经常提交。如果你想提交只是因为你需要一个干净的工作副本（检出一个分支，拉取更改等），请考虑使用Git的“Stash”功能。
 
-### Use Branches
-Branching is one of Git‘s most powerful features - and this is not by accident: quick and easy branching was a central requirement from day one. Branches are the perfect tool to help you avoid mixing up different lines of development. You should use branches extensively in your development workflows: for new features, bug fixes, ideas...
+### 在提交之前测试您的代码
 
-### Agree on A Workflow
-Git lets you pick from a lot of different workflows: long-running branches, topic branches, merge or rebase, git-flow... Which one you choose depends on a couple of factors: your project, your overall development and deployment workflows and (maybe most importantly) on your and your teammates‘ personal preferences. However you choose to work, just make sure to agree on a common workflow that everyone follows.
+抵抗提交你“认为”完成的东西的诱惑。彻底测试它，以确保它确实已经完成并且没有副作用（就我们所知）。当在本地存储库中提交半烤的东西时，只需要原谅自己，但是在将代码推送/共享给其他人时，对代码进行测试更加重要。
 
-The following document is based on experience doing code development, bug troubleshooting and code review across a number of projects using GIT, including libvirt, QEMU and OpenStack Nova. Examination of other open source projects such as the Kernel, CoreUtils, GNULIB and more suggested they all follow a fairly common practice. It is motivated by a desire to improve the quality of the Nova GIT history. Quality is a hard term to define in computing; one man's "Thing of Beauty" is another man's "Evil Hack". We can, however, come up with some general guidelines for what to do, or conversely what not to do, when publishing GIT commits for merge with a project, in this case, OpenStack.
+### 编写良好的提交消息
 
-This topic can be split into two areas of concern
-* The structured set/split of the code changes
-* The information provided in the commit message
+以一个简短的更改摘要开始您的消息（最多50个字符作为指南）。通过包含空行将其与以下正文分开。您的消息正文应提供对以下问题的详细答案：
+- 更改的动机是什么？
+- 它与以前的实现有何不同？
+使用祈使语气，现在时态（“change”，而不是“changed”或“changes”）与诸如git merge之类的命令生成的消息保持一致。
 
-## Formatting Rules
+### 使用分支
 
-- Capitalized, short __(50 chars or less)__ summary
+分支是Git最强大的功能之一，这不是偶然的：快速简便的分支是从第一天开始的一个核心要求。分支是帮助您避免混淆不同开发线的完美工具。您应该在开发工作流程中广泛使用分支：用于新功能，错误修复，想法...
 
-- More detailed explanatory text, if necessary.  __Wrap it to about 72 characters__.  In some contexts, the first line is treated as the subject of an email and the rest of the text as the body.  The blank line separating the summary from the body is critical (unless you omit the body entirely); tools like rebase can get confused if you run the two together.
+### 同意工作流程
 
-- __Always leave the second line blank.__
+Git允许您从许多不同的工作流中进行选择：长期运行的分支，主题分支，合并或rebase，git-flow...您选择哪个取决于几个因素：您的项目，您的整体开发和部署工作流以及（也许最重要的是）您和您的队友的个人偏好。无论您选择哪种工作方式，只要确保达成共识，每个人都会遵循共同的工作流程。
 
-- Write your commit message in the imperative: "Fix bug" and not "Fixed bug" or "Fixes bug."  This convention matches up with commit messages generated by commands like git merge and git revert.
+下面的文档基于使用GIT的一些项目（包括libvirt，QEMU和OpenStack Nova）进行代码开发，故障排除和代码审查的经验。对其他开源项目（如Kernel，CoreUtils，GNULIB等）的研究表明，它们都遵循着相当普遍的做法。它的动机是希望提高Nova GIT历史的质量。质量是一个很难定义的计算术语;一个人的“美丽之物”是另一个人的“邪恶黑客”。然而，我们可以提出一些一般性的指导方针，用于发布与项目合并的GIT提交，本例中为OpenStack，或者反过来，不要这样做。
 
-- Further paragraphs come after blank lines.
-    - Bullet points are okay, too
-    - Typically a hyphen or asterisk is used for the bullet, preceded by a single space, with blank lines in between, but conventions vary here
-    - Use a hanging indent
+这个主题可以分为两个关注领域
 
-### Examples of good practice
+* 代码更改的结构化集/分割
+* 提供的提交消息中的信息
 
-__Example 1__ (no description, only summary)
+## 格式化规则
 
-```
-  commit 3114a97ba188895daff4a3d337b2c73855d4632d
+- 大写，简短（50个字符或更少）的摘要
+- 合并的更详细的解释性文本（如果需要）。将其包装到大约72个字符。在某些情况下，第一行被视为电子邮件的主题，其余文本被视为正文。分隔摘要和正文的空行至关重要（除非您完全省略正文）;如果您将两者结合在一起，rebase等工具可能会混淆。
+- 总是留下第二行空白。
+- 用祈使语气写你的提交消息：“修复错误”而不是“修复错误”或“修复错误”。这个约定与git merge和git revert等命令生成的提交消息相匹配。
+- 进一步的段落在空行之后。
+    - 项目符号也可以
+    - 通常使用连字符或星号作为项目符号，前面有一个空格，在两者之间有空行，但是约定在这里有所不同
+    - 使用悬挂缩进
+
+### 良好实践的例子
+
+例子1（没有描述，只有摘要）
+
+```    
+  commit 5c6bce2d0d1c1e0c0b8d9e4e8b8f6e0b1e7e4b1e
   Author: [removed]
   Date:   Mon Jun 11 17:16:10 2012 +0100
 
     Update default policies for KVM guest PIT & RTC timers
 ```
 
-__Example 2__ (description as bullet points)
+例子2（描述为项目符号）
+
 ```
   commit ae878fc8b9761d099a4145617e4a48cbeb390623
   Author: [removed]
@@ -85,7 +90,7 @@ __Example 2__ (description as bullet points)
      - Allow for destruction of an instance while leaving the domain
 ```
 
-__Example 3__ (description as plain text)
+例子3（描述为纯文本）
 
 ```
   commit 31336b35b4604f70150d0073d77dbf63b9bf7598

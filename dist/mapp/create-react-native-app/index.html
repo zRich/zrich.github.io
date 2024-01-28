@@ -5,7 +5,13 @@ main[data-astro-cid-bvzihdzo]{width:calc(100% - 2em);max-width:100%;margin:0}.he
 <li><a href="https://expo.io/">Expo</a>：Expo 是一个开源工具链，用于构建、发布和管理 iOS 和 Android 上的 React Native 应用程序。</li>
 <li>React Native CLI</li>
 </ul>
-<p>在我现在的系统上，使用 React Native CLI 创建 React Native App 会遇到很多问题，所以我选择使用 Expo 来创建 React Native App。</p>
+<p>在我现在的系统上，使用 React Native CLI 创建 React Native App 会遇到很多问题，尤其是网络问题，所以我选择使用 Expo 来创建 React Native App。</p>
+<p>此时的 <code>npm</code> 和 <code>yarn</code> 仓库设置是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span style="color:#B392F0">❯</span><span style="color:#9ECBFF"> npm</span><span style="color:#9ECBFF"> config</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> registry</span></span>
+<span class="line"><span style="color:#B392F0">https://registry.npmmirror.com</span></span>
+<span class="line"><span style="color:#B392F0">❯</span><span style="color:#9ECBFF"> yarn</span><span style="color:#9ECBFF"> config</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> registry</span></span>
+<span class="line"><span style="color:#B392F0">https://registry.yarnpkg.com</span></span></code></pre>
+<p>如果使用 <code>npm</code>，即使设置成国内的镜像，也会非常非常的慢。</p>
 <p>我的最佳实践是：</p>
 <ol>
 <li>使用 Expo 创建 React Native App</li>

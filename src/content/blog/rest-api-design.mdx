@@ -471,3 +471,9 @@ Content-Type: application/vnd.adventure-works.v1+json; charset=utf-8
 选择版本控制策略时，还应考虑对性能的影响，尤其是在 Web 服务器上缓存时。 URI 版本控制和查询字符串版本控制方案都是缓存友好的，因为同一 URI/查询字符串组合每次都指向相同的数据。
 
 标头版本控制和媒体类型版本控制机制通常需要其他逻辑来检查自定义标头或 Accept 标头中的值。 在大型环境中，使用不同版本的 Web API 的多个客户端可能会在服务器端缓存中生成大量重复数据。 如果客户端应用程序通过实现缓存的代理与 Web 服务器进行通信，并且该代理在当前未在其缓存中保留所请求数据的副本时，仅将请求转发到 Web 服务器，则此问题可能会变得很严重。
+
+# REST API 响应格式
+
+以下内容来自：https://gist.github.com/luismts/5cce038d4be2a00323ad698c804ffeea
+
+<script src="https://gist.github.com/luismts/5cce038d4be2a00323ad698c804ffeea.js"></script>

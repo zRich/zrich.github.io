@@ -1,65 +1,58 @@
 <!DOCTYPE html><html lang="en" data-astro-cid-bvzihdzo> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.png"><meta name="generator" content="Astro v4.1.1"><!-- Canonical URL --><link rel="canonical" href="https://zhaozhenhua.com/devops/git-best-practics/"><!-- Primary Meta Tags --><title>Git 最佳实践</title><meta name="title" content="Git 最佳实践"><meta name="description" content="如何用好 Git"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://zhaozhenhua.com/devops/git-best-practics/"><meta property="og:title" content="Git 最佳实践"><meta property="og:description" content="如何用好 Git"><meta property="og:image" content="https://zhaozhenhua.com/blog-placeholder-1.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://zhaozhenhua.com/devops/git-best-practics/"><meta property="twitter:title" content="Git 最佳实践"><meta property="twitter:description" content="如何用好 Git"><meta property="twitter:image" content="https://zhaozhenhua.com/blog-placeholder-1.jpg"><style>:root{--accent: #2337ff;--accent-dark: #000d8a;--black: 15, 18, 25;--gray: rgba(0,0,0,.54);--gray-light: 229, 233, 240;--gray-dark: 34, 41, 57;--gray-gradient: rgba(var(--gray-light), 50%), #fff;--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%)}body{font-family:"Noto Serif SC",serif;margin:0;padding:0;text-align:left;background:linear-gradient(var(--gray-gradient)) no-repeat;background-size:100% 600px;word-wrap:break-word;overflow-wrap:break-word;color:rgb(var(--gray-dark));font-size:20px;line-height:1.7}main{width:100%;max-width:calc(100% - 2em);margin:auto;padding:3em 1em}h1,h2,h3,h4,h5,h6{margin:0 0 .5rem;color:rgb(var(--black));line-height:1.2}h1{font-size:48px}h2{font-size:36px}h3{font-size:32px}h4{font-size:21px}h5{font-size:16px;color:rgb(var(--gray));margin-top:1.25rem}strong,b{font-weight:700}a,a:hover{color:var(--accent)}p{margin-bottom:1em}.prose p{margin-bottom:2em}textarea{width:100%;font-size:16px}input{font-size:16px}table{width:100%}img{max-width:100%;height:auto;border-radius:8px}code{padding:2px 5px;background-color:rgb(var(--gray-light));border-radius:2px}pre{padding:1.5em;border-radius:8px}pre>code{all:unset}blockquote{border-left:4px solid var(--gray);padding:0 0 0 20px;margin:0;font-size:1.25rem;color:rgb(var(--gray-dark))}hr{border:none;border-top:1px solid rgb(var(--gray-light))}@media (max-width: 1320px){body{font-size:18px}main{padding:1em}}.sr-only{border:0;padding:0;margin:0;position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);clip-path:inset(50%);white-space:nowrap}footer[data-astro-cid-sz7xmlte]{padding:2em 1em 6em;background:linear-gradient(var(--gray-gradient)) no-repeat;color:rgb(var(--gray));text-align:center}.social-links[data-astro-cid-sz7xmlte]{display:flex;justify-content:center;gap:1em;margin-top:1em}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]{text-decoration:none;color:rgb(var(--gray))}.social-links[data-astro-cid-sz7xmlte] a[data-astro-cid-sz7xmlte]:hover{color:rgb(var(--gray-dark))}header[data-astro-cid-3ef6ksr2]{margin:0;padding:0 1em;background:#fff;box-shadow:0 2px 8px rgba(var(--black),5%)}h2[data-astro-cid-3ef6ksr2]{margin:0;font-size:1em}h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2],h2[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none}nav[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:space-between}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{padding:1em .5em;color:var(--black);border-bottom:4px solid transparent;text-decoration:none}nav[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2].active{text-decoration:none;border-bottom-color:var(--accent)}.social-links[data-astro-cid-3ef6ksr2],.social-links[data-astro-cid-3ef6ksr2] a[data-astro-cid-3ef6ksr2]{display:flex}@media (max-width: 720px){.social-links[data-astro-cid-3ef6ksr2]{display:none}}
 main[data-astro-cid-bvzihdzo]{width:calc(100% - 2em);max-width:100%;margin:0}.hero-image[data-astro-cid-bvzihdzo]{width:100%}.hero-image[data-astro-cid-bvzihdzo] img[data-astro-cid-bvzihdzo]{display:block;margin:0 auto;border-radius:12px;width:720px;box-shadow:var(--box-shadow)}.prose[data-astro-cid-bvzihdzo]{width:720px;max-width:calc(100% - 2em);margin:auto;padding:1em;color:rgb(var(--gray-dark))}.title[data-astro-cid-bvzihdzo]{margin-bottom:1em;padding:1em 0;text-align:center;line-height:1}.title[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{margin:0 0 .5em}.date[data-astro-cid-bvzihdzo]{margin-bottom:.5em;color:rgb(var(--gray))}.last-updated-on[data-astro-cid-bvzihdzo]{font-style:italic;color:rgb(var(--gray))}
-</style></head> <body data-astro-cid-bvzihdzo> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/" data-astro-cid-3ef6ksr2>Rich&#39;s Blog</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <!-- <HeaderLink href="/">Home</HeaderLink> --> <!-- <HeaderLink href="/blog">Blog</HeaderLink> --> <!-- <HeaderLink href="/about">About</HeaderLink> --> </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://github.com/zRich" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to My GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> </div> </nav> </header>  <main data-astro-cid-bvzihdzo> <article data-astro-cid-bvzihdzo> <div class="hero-image" data-astro-cid-bvzihdzo> <img src="/images/devops/Git-logo.svg" alt="" data-astro-cid-bvzihdzo> </div> <div class="prose" data-astro-cid-bvzihdzo> <div class="title" data-astro-cid-bvzihdzo> <div class="date" data-astro-cid-bvzihdzo> <time datetime="2024-01-26T16:00:00.000Z"> Jan 27, 2024 </time>  </div> <h1 data-astro-cid-bvzihdzo>Git 最佳实践</h1> <hr data-astro-cid-bvzihdzo> </div>  <h1 id="git-commit-best-practices">Git Commit Best Practices</h1>
-<h2 id="basic-rules">Basic Rules</h2>
-<h3 id="commit-related-changes">Commit Related Changes</h3>
-<p>A commit should be a wrapper for related changes. For example, fixing two different bugs should produce two separate commits. Small commits make it easier for other developers to understand the changes and roll them back if something went wrong.
-With tools like the staging area and the ability to stage only parts of a file, Git makes it easy to create very granular commits.</p>
-<h3 id="commit-often">Commit Often</h3>
-<p>Committing often keeps your commits small and, again, helps you commit only related changes. Moreover, it allows you to share your code more frequently with others. That way it‘s easier for everyone to integrate changes regularly and avoid having merge conflicts. Having large commits and sharing them infrequently, in contrast, makes it hard to solve conflicts.</p>
-<h3 id="dont-commit-half-done-work">Don’t Commit Half-Done Work</h3>
-<p>You should only commit code when a logical component is completed.
-Split a feature‘s implementation into logical chunks that can be completed quickly so that you can commit often. If you‘re tempted to commit just because you need a clean working copy (to check out a branch, pull in changes, etc.) consider using Git‘s «Stash» feature instead.</p>
-<h3 id="test-your-code-before-you-commit">Test Your Code Before You Commit</h3>
-<p>Resist the temptation to commit something that you «think» is completed. Test it thoroughly to make sure it really is completed and has no side effects (as far as one can tell). While committing half-baked things in your local repository only requires you to forgive yourself, having your code tested is even more important when it comes to pushing/sharing your code with others.</p>
-<h3 id="write-good-commit-messages">Write Good Commit Messages</h3>
-<p>Begin your message with a short summary of your changes (up to 50 characters as a guideline). Separate it from
-the following body by including a blank line. The body of your message should provide detailed answers to the following questions:
-– What was the motivation for the change? – How does it differ from the previous
-implementation?
-Use the imperative, present tense («change», not «changed» or «changes») to be consistent with generated messages from commands like git merge.
-Having your files backed up on a remote server is a nice side effect of having a version control system. But you should not use your VCS like it was a backup system. When doing version control, you should pay attention to committing semantically (see «related changes») - you shouldn‘t just cram in files.</p>
-<h3 id="use-branches">Use Branches</h3>
-<p>Branching is one of Git‘s most powerful features - and this is not by accident: quick and easy branching was a central requirement from day one. Branches are the perfect tool to help you avoid mixing up different lines of development. You should use branches extensively in your development workflows: for new features, bug fixes, ideas…</p>
-<h3 id="agree-on-a-workflow">Agree on A Workflow</h3>
-<p>Git lets you pick from a lot of different workflows: long-running branches, topic branches, merge or rebase, git-flow… Which one you choose depends on a couple of factors: your project, your overall development and deployment workflows and (maybe most importantly) on your and your teammates‘ personal preferences. However you choose to work, just make sure to agree on a common workflow that everyone follows.</p>
-<p>The following document is based on experience doing code development, bug troubleshooting and code review across a number of projects using GIT, including libvirt, QEMU and OpenStack Nova. Examination of other open source projects such as the Kernel, CoreUtils, GNULIB and more suggested they all follow a fairly common practice. It is motivated by a desire to improve the quality of the Nova GIT history. Quality is a hard term to define in computing; one man’s “Thing of Beauty” is another man’s “Evil Hack”. We can, however, come up with some general guidelines for what to do, or conversely what not to do, when publishing GIT commits for merge with a project, in this case, OpenStack.</p>
-<p>This topic can be split into two areas of concern</p>
+</style></head> <body data-astro-cid-bvzihdzo> <header data-astro-cid-3ef6ksr2> <nav data-astro-cid-3ef6ksr2> <h2 data-astro-cid-3ef6ksr2><a href="/" data-astro-cid-3ef6ksr2>Rich&#39;s Blog</a></h2> <div class="internal-links" data-astro-cid-3ef6ksr2> <!-- <HeaderLink href="/">Home</HeaderLink> --> <!-- <HeaderLink href="/blog">Blog</HeaderLink> --> <!-- <HeaderLink href="/about">About</HeaderLink> --> </div> <div class="social-links" data-astro-cid-3ef6ksr2> <a href="https://github.com/zRich" target="_blank" data-astro-cid-3ef6ksr2> <span class="sr-only" data-astro-cid-3ef6ksr2>Go to My GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" data-astro-cid-3ef6ksr2><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-3ef6ksr2></path></svg> </a> </div> </nav> </header>  <main data-astro-cid-bvzihdzo> <article data-astro-cid-bvzihdzo> <div class="hero-image" data-astro-cid-bvzihdzo> <img src="/images/devops/Git-logo.svg" alt="" data-astro-cid-bvzihdzo> </div> <div class="prose" data-astro-cid-bvzihdzo> <div class="title" data-astro-cid-bvzihdzo> <div class="date" data-astro-cid-bvzihdzo> <time datetime="2024-01-26T16:00:00.000Z"> Jan 27, 2024 </time>  </div> <h1 data-astro-cid-bvzihdzo>Git 最佳实践</h1> <hr data-astro-cid-bvzihdzo> </div>  <blockquote>
+<p>根据 <a href="https://gist.github.com/luismts/495d982e8c5b1a0ced4a57cf3d93cf60">Git Commit Best Practices</a> 翻译整理。</p>
+</blockquote>
+<h1 id="git-提交最佳实践">Git 提交最佳实践</h1>
+<h2 id="基本规则">基本规则</h2>
+<h3 id="提交相关的更改">提交相关的更改</h3>
+<p>一次提交应该是相关更改的包装。例如，修复两个不同的错误应该产生两个单独的提交。小的提交使得其他开发人员更容易理解这些更改，并在出现问题时回滚它们。</p>
+<h3 id="经常提交">经常提交</h3>
+<p>经常提交可以使您的提交变得更小，并且再次帮助您仅提交相关更改。此外，它允许您更频繁地与他人共享代码。这样，每个人都可以更容易地定期集成更改并避免合并冲突。相比之下，拥有大的提交并且不经常共享它们会使解决冲突变得困难。</p>
+<h3 id="不要提交未完成的工作">不要提交未完成的工作</h3>
+<p>你应该只在完成逻辑组件时才提交代码。
+将功能的实现拆分为可以快速完成的逻辑块，以便您可以经常提交。如果你想提交只是因为你需要一个干净的工作副本（检出一个分支，拉取更改等），请考虑使用Git的“Stash”功能。</p>
+<h3 id="在提交之前测试您的代码">在提交之前测试您的代码</h3>
+<p>抵抗提交你“认为”完成的东西的诱惑。彻底测试它，以确保它确实已经完成并且没有副作用（就我们所知）。当在本地存储库中提交半烤的东西时，只需要原谅自己，但是在将代码推送/共享给其他人时，对代码进行测试更加重要。</p>
+<h3 id="编写良好的提交消息">编写良好的提交消息</h3>
+<p>以一个简短的更改摘要开始您的消息（最多50个字符作为指南）。通过包含空行将其与以下正文分开。您的消息正文应提供对以下问题的详细答案：</p>
 <ul>
-<li>The structured set/split of the code changes</li>
-<li>The information provided in the commit message</li>
+<li>更改的动机是什么？</li>
+<li>它与以前的实现有何不同？
+使用祈使语气，现在时态（“change”，而不是“changed”或“changes”）与诸如git merge之类的命令生成的消息保持一致。</li>
 </ul>
-<h2 id="formatting-rules">Formatting Rules</h2>
+<h3 id="使用分支">使用分支</h3>
+<p>分支是Git最强大的功能之一，这不是偶然的：快速简便的分支是从第一天开始的一个核心要求。分支是帮助您避免混淆不同开发线的完美工具。您应该在开发工作流程中广泛使用分支：用于新功能，错误修复，想法…</p>
+<h3 id="同意工作流程">同意工作流程</h3>
+<p>Git允许您从许多不同的工作流中进行选择：长期运行的分支，主题分支，合并或rebase，git-flow…您选择哪个取决于几个因素：您的项目，您的整体开发和部署工作流以及（也许最重要的是）您和您的队友的个人偏好。无论您选择哪种工作方式，只要确保达成共识，每个人都会遵循共同的工作流程。</p>
+<p>下面的文档基于使用GIT的一些项目（包括libvirt，QEMU和OpenStack Nova）进行代码开发，故障排除和代码审查的经验。对其他开源项目（如Kernel，CoreUtils，GNULIB等）的研究表明，它们都遵循着相当普遍的做法。它的动机是希望提高Nova GIT历史的质量。质量是一个很难定义的计算术语;一个人的“美丽之物”是另一个人的“邪恶黑客”。然而，我们可以提出一些一般性的指导方针，用于发布与项目合并的GIT提交，本例中为OpenStack，或者反过来，不要这样做。</p>
+<p>这个主题可以分为两个关注领域</p>
 <ul>
-<li>
-<p>Capitalized, short <strong>(50 chars or less)</strong> summary</p>
-</li>
-<li>
-<p>More detailed explanatory text, if necessary.  <strong>Wrap it to about 72 characters</strong>.  In some contexts, the first line is treated as the subject of an email and the rest of the text as the body.  The blank line separating the summary from the body is critical (unless you omit the body entirely); tools like rebase can get confused if you run the two together.</p>
-</li>
-<li>
-<p><strong>Always leave the second line blank.</strong></p>
-</li>
-<li>
-<p>Write your commit message in the imperative: “Fix bug” and not “Fixed bug” or “Fixes bug.”  This convention matches up with commit messages generated by commands like git merge and git revert.</p>
-</li>
-<li>
-<p>Further paragraphs come after blank lines.</p>
+<li>代码更改的结构化集/分割</li>
+<li>提供的提交消息中的信息</li>
+</ul>
+<h2 id="格式化规则">格式化规则</h2>
 <ul>
-<li>Bullet points are okay, too</li>
-<li>Typically a hyphen or asterisk is used for the bullet, preceded by a single space, with blank lines in between, but conventions vary here</li>
-<li>Use a hanging indent</li>
+<li>大写，简短（50个字符或更少）的摘要</li>
+<li>合并的更详细的解释性文本（如果需要）。将其包装到大约72个字符。在某些情况下，第一行被视为电子邮件的主题，其余文本被视为正文。分隔摘要和正文的空行至关重要（除非您完全省略正文）;如果您将两者结合在一起，rebase等工具可能会混淆。</li>
+<li>总是留下第二行空白。</li>
+<li>用祈使语气写你的提交消息：“修复错误”而不是“修复错误”或“修复错误”。这个约定与git merge和git revert等命令生成的提交消息相匹配。</li>
+<li>进一步的段落在空行之后。
+<ul>
+<li>项目符号也可以</li>
+<li>通常使用连字符或星号作为项目符号，前面有一个空格，在两者之间有空行，但是约定在这里有所不同</li>
+<li>使用悬挂缩进</li>
 </ul>
 </li>
 </ul>
-<h3 id="examples-of-good-practice">Examples of good practice</h3>
-<p><strong>Example 1</strong> (no description, only summary)</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit 3114a97ba188895daff4a3d337b2c73855d4632d</span></span>
+<h3 id="良好实践的例子">良好实践的例子</h3>
+<p>例子1（没有描述，只有摘要）</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit 5c6bce2d0d1c1e0c0b8d9e4e8b8f6e0b1e7e4b1e</span></span>
 <span class="line"><span>  Author: [removed]</span></span>
 <span class="line"><span>  Date:   Mon Jun 11 17:16:10 2012 +0100</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>    Update default policies for KVM guest PIT &amp; RTC timers</span></span></code></pre>
-<p><strong>Example 2</strong> (description as bullet points)</p>
+<p>例子2（描述为项目符号）</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit ae878fc8b9761d099a4145617e4a48cbeb390623</span></span>
 <span class="line"><span>  Author: [removed]</span></span>
 <span class="line"><span>  Date:   Fri Jun 1 01:44:02 2012 +0000</span></span>
@@ -71,7 +64,7 @@ Having your files backed up on a remote server is a nice side effect of having a
 <span class="line"><span>     - Make wait_for_destroy happen on shutdown instead of undefine</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>     - Allow for destruction of an instance while leaving the domain</span></span></code></pre>
-<p><strong>Example 3</strong> (description as plain text)</p>
+<p>例子3（描述为纯文本）</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0"><code><span class="line"><span>  commit 31336b35b4604f70150d0073d77dbf63b9bf7598</span></span>
 <span class="line"><span>  Author: [removed]</span></span>
 <span class="line"><span>  Date:   Wed Jun 6 22:45:25 2012 -0400</span></span>
